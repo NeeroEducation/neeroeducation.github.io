@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="samples/dalle.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Tools</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* Ensure proper emoji rendering */
+      .emoji-flag {
+        font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        font-size: 1.5em;
+      }
+
+      /* Modal styles */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        z-index: 1000;
+        cursor: pointer;
+      }
+
+      .modal-content {
+        max-width: 90%;
+        max-height: 90vh;
+        margin: auto;
+        display: block;
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .modal.active {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Modal -->
+    <div id="imageModal" class="modal" onclick="closeModal()">
+      <img id="modalImage" src="" alt="" class="modal-content">
+    </div>
+
+    <div class="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-blue-100">
+        <!-- Hero Section -->
+        <header class="py-16 px-4 text-center">
+            <div class="max-w-4xl mx-auto">
+                <i data-lucide="brain" class="w-16 h-16 mx-auto text-indigo-600 mb-6"></i>
+                <h1 class="text-5xl font-bold text-gray-900 mb-6">
+                    Искусственный Интеллект в Образовании
+                </h1>
+                <p class="text-xl text-gray-600 mb-8">
+                    Откройте для себя мир возможностей с современными AI-инструментами
+                </p>
+            </div>
+        </header>
+
+        <!-- Benefits Section -->
+        <section class="py-12 px-4 bg-white/80 backdrop-blur-sm mb-16">
+            <div class="max-w-6xl mx-auto">
+                <div class="grid md:grid-cols-2 gap-12">
+                    <!-- Education Benefits -->
+                    <div class="space-y-6">
+                        <h2 class="text-3xl font-bold text-indigo-600 mb-4">AI в Обучении</h2>
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="w-6 h-6 text-green-500 flex-shrink-0 mt-1"></i>
+                                <span>Персонализированные учебные планы, адаптированные под темп и стиль обучения каждого студента</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="w-6 h-6 text-green-500 flex-shrink-0 mt-1"></i>
+                                <span>Мгновенная обратная связь и объяснения сложных концепций простым языком</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="w-6 h-6 text-green-500 flex-shrink-0 mt-1"></i>
+                                <span>Помощь в написании эссе, исследовательских работ и решении задач</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="w-6 h-6 text-green-500 flex-shrink-0 mt-1"></i>
+                                <span>Создание интерактивных учебных материалов и визуализаций</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- Daily Life Benefits -->
+                    <div class="space-y-6">
+                        <h2 class="text-3xl font-bold text-indigo-600 mb-4">AI в Повседневной Жизни</h2>
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="w-6 h-6 text-green-500 flex-shrink-0 mt-1"></i>
+                                <span>Автоматизация рутинных задач и планирование расписания</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="w-6 h-6 text-green-500 flex-shrink-0 mt-1"></i>
+                                <span>Помощь в создании контента: от презентаций до дизайна</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="w-6 h-6 text-green-500 flex-shrink-0 mt-1"></i>
+                                <span>Перевод текстов и общение на иностранных языках</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="w-6 h-6 text-green-500 flex-shrink-0 mt-1"></i>
+                                <span>Анализ данных и принятие решений на основе AI-рекомендаций</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content -->
+        <main class="max-w-6xl mx-auto px-4 pb-16">
+            <!-- Tabs -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12" id="tabs">
+                <!-- Tabs will be inserted here by JavaScript -->
+            </div>
+
+            <!-- Content -->
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden" id="content">
+                <!-- Content will be inserted here by JavaScript -->
+            </div>
+
+            <!-- Features -->
+            <div class="mt-16 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <i data-lucide="bot" class="w-12 h-12 text-indigo-600 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Персонализированное Обучение</h3>
+                    <p class="text-gray-600">
+                        AI адаптируется к вашему темпу и стилю обучения, обеспечивая максимальную эффективность.
+                    </p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <i data-lucide="book-open" class="w-12 h-12 text-indigo-600 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Интерактивные Материалы</h3>
+                    <p class="text-gray-600">
+                        Создавайте и используйте интерактивный контент для лучшего усвоения материала.
+                    </p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <i data-lucide="brain" class="w-12 h-12 text-indigo-600 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Умная Аналитика</h3>
+                    <p class="text-gray-600">
+                        Отслеживайте свой прогресс и получайте рекомендации по улучшению результатов.
+                    </p>
+                </div>
+            </div>
+        </main>
+		
+		<footer class="py-16 px-4 text-center text-gray-600 text-sm">
+		Проект Винникова Ильи, 7-5 класс, МБОУ "Академический лицей №95 г. Челябинска", 2025. Сайт носит информационный характер.
+		</footer>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Modal functions
+        function openModal(imageSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            modal.classList.add('active');
+            modalImg.src = imageSrc;
+            document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = ''; // Restore scrolling
+        }
+
+        // AI Tools data
+        const aiTools = [
+            {
+                id: 1,
+                name: 'ChatGPT',
+                description: 'Мощный языковой ассистент, который помогает в написании текстов, программировании и ответах на вопросы. Идеален для учебы и исследований.',
+                image: 'logos/chatgpt.jpg',
+                icon: 'message-square',
+                url: 'https://chat.openai.com',
+                country: 'США',
+                flag: '🇺🇸',
+                sample: 'samples/chatgpt.png'
+            },
+            {
+                id: 2,
+                name: 'DALL-E',
+                description: 'Нейросеть для создания изображений по текстовому описанию. Помогает визуализировать идеи и создавать уникальные иллюстрации для проектов.',
+                image: 'logos/dall-e.png',
+                icon: 'image',
+                url: 'https://labs.openai.com',
+                country: 'США',
+                flag: '🇺🇸',
+                sample: 'samples/dalle.png'
+            },
+            {
+                id: 3,
+                name: 'Midjourney',
+                description: 'Продвинутый AI-инструмент для создания художественных изображений. Отлично подходит для творческих проектов и дизайна.',
+                image: 'logos/midjourney.png',
+                icon: 'pencil',
+                url: 'https://www.midjourney.com',
+                country: 'США',
+                flag: '🇺🇸',
+                sample: 'samples/midjourney.png'
+            },
+            {
+                id: 4,
+                name: 'Math-gpt',
+                description: 'Мощная нейросеть для решения задач по точным наукам Физике Алгебре и т.д. Отлично подходит для обучения хорошо расписывает решения.',
+                image: 'logos/math-gpt.jpg',
+                icon: 'calculator',
+                url: 'https://math-gpt.com',
+                country: 'США',
+                flag: '🇺🇸',
+                sample: 'samples/math-gpt.png'
+            },
+            {
+                id: 6,
+                name: 'Stable Diffusion',
+                description: 'Мощный инструмент для генерации и редактирования изображений с открытым исходным кодом.',
+                image: 'logos/stable-diffusion.jpg',
+                icon: 'palette',
+                url: 'https://stablediffusionweb.com',
+                country: 'Великобритания',
+                flag: '🇬🇧',
+                sample: 'samples/stablediffusion.png'
+            },
+            {
+                id: 7,
+                name: 'Runway',
+                description: 'Профессиональный инструмент для создания и редактирования видео с помощью AI. Позволяет генерировать, редактировать и улучшать видеоконтент.',
+                image: 'logos/runway.png',
+                icon: 'video',
+                url: 'https://runway.ml',
+                country: 'США',
+                flag: '🇺🇸',
+                sample: 'samples/runway.png'
+            },
+            {
+                id: 8,
+                name: 'GitHub Copilot',
+                description: 'AI-ассистент для программистов, который помогает писать код, предлагает решения и автоматически дополняет код прямо в редакторе.',
+                image: 'logos/github-copilot.jpeg',
+                icon: 'code',
+                url: 'https://github.com/features/copilot',
+                country: 'США',
+                flag: '🇺🇸',
+                sample: 'samples/githubcopilot.png'
+            },
+            {
+                id: 9,
+                name: 'Kandinsky',
+                description: 'Российская нейросеть для генерации изображений от Сбера, способная создавать высококачественные изображения на основе текстовых описаний.',
+                image: 'logos/kandinskiy.png',
+                icon: 'palette',
+                url: 'https://www.sberbank.com/promo/kandinsky/',
+                country: 'Россия',
+                flag: '🇷🇺',
+                sample: 'samples/kandinsky.png'
+            },
+            {
+                id: 10,
+                name: 'Gemini',
+                description: 'Передовая мультимодальная AI-система от Google, способная работать с текстом, изображениями, кодом и данными. Помогает в обучении, программировании и творческих задачах.',
+                image: 'logos/gemini.jpg',
+                icon: 'sparkles',
+                url: 'https://gemini.google.com/?hl=ru',
+                country: 'США',
+                flag: '🇺🇸',
+                sample: 'samples/gemini.jpg'
+            },
+            {
+                id: 11,
+                name: 'Perplexity',
+                description: 'Инновационный AI-поисковик, который не только находит информацию, но и анализирует её, предоставляя подробные, структурированные ответы с указанием источников.',
+                image: 'logos/perplexity.jpg',
+                icon: 'search',
+                url: 'https://www.perplexity.ai',
+                country: 'США',
+                flag: '🇺🇸',
+                sample: 'samples/perplexity.png'
+            },
+            {
+                id: 12,
+                name: 'DeepSeek',
+                description: 'Современный языковой ассистент, помогающий в создании текстов, решении задач и поиске информации. Отлично подходит для учебы, исследований и повседневных задач.',
+                image: 'logos/deepseek.jpeg',
+                icon: 'brain-circuit',
+                url: 'https://deepseek.ai',
+                country: 'Китай',
+                flag: '🇨🇳',
+                sample: 'samples/deepseek.png'
+            }
+        ];
+
+        let activeTab = 0;
+
+        function createTabs() {
+            const tabsContainer = document.getElementById('tabs');
+            tabsContainer.innerHTML = aiTools.map((tool, index) => `
+                <button
+                    onclick="setActiveTab(${index})"
+                    class="flex items-center gap-2 px-6 py-3 rounded-full transition-all ${
+                        activeTab === index
+                            ? 'bg-indigo-600 text-white shadow-lg'
+                            : 'bg-white text-gray-700 hover:bg-indigo-50'
+                    }"
+                >
+                    <i data-lucide="${tool.icon}" class="w-6 h-6"></i>
+                    ${tool.name}
+                </button>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function updateContent() {
+            const contentContainer = document.getElementById('content');
+            const tool = aiTools[activeTab];
+            contentContainer.innerHTML = `
+                <div class="grid md:grid-cols-2">
+                    <div class="h-64 md:h-auto">
+                        <img
+                            src="${tool.image}"
+                            alt="${tool.name}"
+                            class="w-full object-cover"
+                        />
+                    </div>
+                    <div class="p-8">
+                        <div class="flex items-center gap-3 mb-4">
+                            <i data-lucide="${tool.icon}" class="w-6 h-6"></i>
+                            <a href="${tool.url}" target="_blank" class="text-2xl font-bold text-gray-900 hover:text-indigo-600 transition-colors no-underline">
+                                ${tool.name}
+                            </a>
+                        </div>
+                        <p class="text-gray-600 leading-relaxed mb-2">
+                            ${tool.description}
+							<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gray-100">
+								<small class="text-gray-700">Страна: ${tool.country}</small>
+							</div>
+							<div class="mt-4">
+								<p><b>Пример использования:</b></p>
+								<p><img src="${tool.sample}" alt="Пример использования" width="300" class="cursor-pointer" onclick="openModal('${tool.sample}')" /></p>
+							</div>
+                        </p>
+                    </div>
+                </div>
+            `;
+            lucide.createIcons();
+        }
+
+        function setActiveTab(index) {
+            activeTab = index;
+            createTabs();
+            updateContent();
+        }
+
+        // Initialize
+        createTabs();
+        updateContent();
+
+        // Close modal when pressing Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+  </body>
+</html>
